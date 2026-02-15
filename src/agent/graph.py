@@ -1,3 +1,4 @@
+from pathlib import Path
 from functools import partial
 
 from .states import OverallAgentState
@@ -30,8 +31,12 @@ from langgraph.checkpoint.memory import InMemorySaver
 checkpointer = InMemorySaver()
 
 
-def gen_png_graph(app_obj, name_photo: str) -> None:
-    with open(name_photo, "wb") as f:
+def gen_png_graph(app_obj, name_photo: str, folder: str = "graph_images") -> None:
+    save_dir = Path(folder)
+    save_dir.mkdir(parents=True, exist_ok=True)
+    file_path = save_dir / name_photo
+
+    with open(file_path, "wb") as f:
         f.write(app_obj.get_graph().draw_mermaid_png())
 
 
