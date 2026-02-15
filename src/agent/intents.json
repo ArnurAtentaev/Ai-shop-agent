@@ -1,0 +1,56 @@
+{
+    "find_product": {
+        "description": "Search for products in the catalog. Use this intent when the user wants to find, search, look up, or browse products by slots",
+        "slots": {
+            "type": "object",
+            "properties": {
+                "product_name": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "find_similar": {
+        "description": "Find products similar to a specific product. Use this intent when the user asks for alternatives, similar items, analogs, or comparable products. The user must reference a product name. Do NOT use this intent to search the full catalog.",
+        "slots": {
+            "type": "object",
+            "properties": {
+                "product_name": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "make_order": {
+        "description": "Create a new order. Use this intent ONLY when the user clearly wants to place, create, or submit a new order and mentions slots details",
+        "slots": {
+            "type": "object",
+            "properties": {
+                "articles": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "quantity": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "city": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "get_orders": {
+        "description": "Retrieve or view the user's EXISTING orders. Use this intent ONLY when the user explicitly refers to their own order(s), such as 'my order', 'my orders', 'order number', 'order id', or tracking a specific order. Do NOT use this intent for general delivery, shipping cost, delivery price, or delivery policy questions."
+    },
+    "general_question": {
+        "description": "Answer general user questions that do NOT require an existing order. This includes questions about shipping cost, delivery price, delivery options, delivery times, payment methods, service operation, terms, and other common inquiries."
+    },
+    "did_not_classified": {
+        "description": "Use this intent when the user's message does not match any known intents or cannot be confidently classified. This includes greetings, small talk, unclear requests, or unrelated questions."
+    }
+}
