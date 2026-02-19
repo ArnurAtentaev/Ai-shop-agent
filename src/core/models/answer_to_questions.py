@@ -4,7 +4,7 @@ from pgvector.sqlalchemy import VECTOR
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.core.models.base import Base
+from core.models.base import Base
 
 
 class Question(Base):

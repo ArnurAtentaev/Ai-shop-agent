@@ -1,10 +1,10 @@
 import logging
 
-from src.agent.states import OverallAgentState
-from src.database_api.orders.schemas import CreateInsertOrder
-from src.database_api.answers_to_questions.agent_crud import get_general_answer
-from src.database_api.orders.agent_crud import get_orders, create_order
-from src.database_api.products.agent_crud import (
+from agent.states import OverallAgentState
+from database_api.orders.schemas import CreateInsertOrder
+from database_api.answers_to_questions.agent_crud import get_general_answer
+from database_api.orders.agent_crud import get_orders, create_order
+from database_api.products.agent_crud import (
     find_products,
     find_similar,
     get_product_by_article,
@@ -30,11 +30,11 @@ async def tool_find_product(state: OverallAgentState) -> OverallAgentState:
     return state
 
 
-async def tool_find_similar(state: OverallAgentState) -> OverallAgentState:
+async def tool_find_similar(state: OverallAgentState, models) -> OverallAgentState:
     product_name = state.slots.get("product_name")
     query = f"{product_name} {state.query}"
 
-    result = await find_similar.ainvoke({"query": query})
+    result = await find_similar.ainvoke({"query": query, "models": models})
 
     if not result:
         state.availability = False
@@ -142,9 +142,9 @@ async def tool_get_orders(state: OverallAgentState) -> OverallAgentState:
     return state
 
 
-async def tool_general_questions(state: OverallAgentState) -> OverallAgentState:
+async def tool_general_questions(state: OverallAgentState, models) -> OverallAgentState:
     state.tool_res = None
-    result = await get_general_answer.ainvoke({"query": state.query})
+    result = await get_general_answer.ainvoke({"query": state.query, "models": models})
 
     if not result:
         return state

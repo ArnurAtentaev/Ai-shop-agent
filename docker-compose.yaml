@@ -1,0 +1,58 @@
+services:
+  ollama:
+    container_name: ollama
+    image: ollama/ollama
+    ports:
+      - "${OLLAMA_PORT_EXPOSE}:${OLLAMA_PORT_SERVICE}"
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            capabilities: ["gpu"]
+            count: all
+    mem_limit: 2g
+    volumes:
+        - ollama_data:/root/.ollama
+    restart: always
+
+  app:
+    build: .
+    container_name: app-ai-agent
+    mem_limit: 6g
+    depends_on:
+      - postgres_db
+      - ollama
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:${OLLAMA_PORT_SERVICE}
+      - CUDA_VISIBLE_DEVICES=0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+    - hf_data:/root/.cache/huggingface
+
+  postgres_db:
+    image: pgvector/pgvector:pg17
+    container_name: pgvector-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+    ports:
+      - "${PG_PORT_EXPOSED}:${PG_PORT_SERVICE}"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    mem_limit: 2g
+
+volumes:
+  pg_data:
+  ollama_data:
+  hf_data:

@@ -1,13 +1,8 @@
 import json
 import logging
 
-from src.agent.initialize_models import (
-    generative_model,
-    seq2seq_tokenizer,
-    seq2seq_model,
-)
-from src.agent.states import OverallAgentState
-from src.agent.prompts import (
+from agent.states import OverallAgentState
+from agent.prompts import (
     INTENT_PROMPT,
     MODEL_FALLBACK_PROMPT,
     TOOL_BASE_ANSWER_PROMPT,
@@ -16,12 +11,12 @@ from src.agent.prompts import (
     INSERT_NER_CLASSIFICATION_PROMPT,
     SELECT_NER_CLASSIFICATION_PROMPT,
 )
-from src.utils.agent_utils import (
+from utils.agent_utils import (
     ner_classification,
     clean_ner_slot_value,
     detect_language,
 )
-from src.core.config import support_settings
+from core.config import support_settings
 
 from langchain_core.prompts import PromptTemplate
 
@@ -40,7 +35,9 @@ PROMPTS = {
 }
 
 
-def intent_classification(state: OverallAgentState, intents: dict) -> OverallAgentState:
+def intent_classification(
+    state: OverallAgentState, intents: dict, models
+) -> OverallAgentState:
     if state.waiting_confirmation is True:
         return state
 
@@ -60,7 +57,7 @@ def intent_classification(state: OverallAgentState, intents: dict) -> OverallAge
             "description: " + intents[intent]["description"]
         )
 
-    intent_chain = prompt | generative_model
+    intent_chain = prompt | models["generative_model"]
     intent_result = intent_chain.invoke(
         {
             "intents": intent_and_description,
@@ -116,7 +113,7 @@ def intent_dispatcher(state: OverallAgentState) -> OverallAgentState:
 
 
 def ner_slots_classification_node(
-    state: OverallAgentState, intents: dict
+    state: OverallAgentState, intents: dict, models
 ) -> OverallAgentState:
     intent = state.intent_result
     schema = intents.get(intent, {}).get("slots")
@@ -130,12 +127,11 @@ def ner_slots_classification_node(
 
     if missing_slots:
         ner_result_str = ner_classification(
-            generative_model,
+            models["generative_model"],
             selected_prompt=prompt,
             question=state.query,
             schema=schema,
         )
-        logging.info(f"Raw NER result: {ner_result_str}")
 
         try:
             slot_values = json.loads(ner_result_str)
@@ -152,7 +148,7 @@ def ner_slots_classification_node(
     return state
 
 
-def ask_missing_slots_node(state: OverallAgentState) -> OverallAgentState:
+def ask_missing_slots_node(state: OverallAgentState, models) -> OverallAgentState:
     missing = [
         slot
         for slot, value in state.slots.items()
@@ -164,7 +160,7 @@ def ask_missing_slots_node(state: OverallAgentState) -> OverallAgentState:
     prompt = PromptTemplate(
         input_variables=["missing"], template=ASK_MISSING_SLOTS_PROMPT
     )
-    chain = prompt | generative_model
+    chain = prompt | models["generative_model"]
 
     result = chain.invoke(
         {"missing": slots_str},
@@ -177,13 +173,13 @@ def ask_missing_slots_node(state: OverallAgentState) -> OverallAgentState:
     return state
 
 
-def tool_base_answer_node(state: OverallAgentState) -> OverallAgentState:
+def tool_base_answer_node(state: OverallAgentState, models) -> OverallAgentState:
     prompt = PromptTemplate(
         input_variables=["data", "intent"],
         template=TOOL_BASE_ANSWER_PROMPT,
     )
 
-    chain = prompt | generative_model
+    chain = prompt | models["generative_model"]
     result = chain.invoke(
         {
             "data": state.tool_res,
@@ -191,19 +187,18 @@ def tool_base_answer_node(state: OverallAgentState) -> OverallAgentState:
         },
         temperature=0.6,
     )
-    logging.info(f"RESULT CONTENT: {result.content}")
 
     state.answer = result.content
     return state
 
 
-def model_fallback_node(state: OverallAgentState) -> OverallAgentState:
+def model_fallback_node(state: OverallAgentState, models) -> OverallAgentState:
     if state.intent_result == "make_order":
         prompt = PromptTemplate(
             input_variables=["data"],
             template=NOT_AVAILABLE_PROMPT,
         )
-        llm_chain = prompt | generative_model
+        llm_chain = prompt | models["generative_model"]
         answer = llm_chain.invoke(
             {
                 "data": state.tool_res,
@@ -224,7 +219,7 @@ def model_fallback_node(state: OverallAgentState) -> OverallAgentState:
         else:
             supp = None
 
-        llm_chain = prompt | generative_model
+        llm_chain = prompt | models["generative_model"]
         answer = llm_chain.invoke(
             {
                 "query": state.query,
@@ -236,26 +231,26 @@ def model_fallback_node(state: OverallAgentState) -> OverallAgentState:
             temperature=0.6,
         )
 
-    logging.info(f"ANSWER CONTENT: {answer.content}")
-
     state.answer = answer.content
     return state
 
 
-def language_adaptation_node(state: OverallAgentState) -> OverallAgentState:
-    tokenized = seq2seq_tokenizer(state.answer, truncation=True, return_tensors="pt")
+def language_adaptation_node(state: OverallAgentState, models) -> OverallAgentState:
+    tokenized = models["seq2seq_tokenizer"](
+        state.answer, truncation=True, return_tensors="pt"
+    )
     detected_lang = detect_language(state.query)
 
     if detected_lang is None:
         return state
 
-    generated = seq2seq_model.generate(
+    generated = models["seq2seq_model"].generate(
         **tokenized,
-        forced_bos_token_id=seq2seq_tokenizer.get_lang_id(detected_lang),
+        forced_bos_token_id=models["seq2seq_tokenizer"].get_lang_id(detected_lang),
         do_sample=False,
     )
 
-    result = seq2seq_tokenizer.decode(generated[0], skip_special_tokens=True)
+    result = models["seq2seq_tokenizer"].decode(generated[0], skip_special_tokens=True)
 
     state.answer = result
     return state

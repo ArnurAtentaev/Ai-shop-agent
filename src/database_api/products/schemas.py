@@ -1,6 +1,6 @@
 from pydantic import ConfigDict
 
-from src.database_api.products.base_schemas import (
+from database_api.products.base_schemas import (
     ProductBase,
     ProductEmbeddingBase,
     CategoryBase,

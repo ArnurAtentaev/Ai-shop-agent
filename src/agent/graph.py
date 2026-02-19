@@ -1,8 +1,8 @@
 from pathlib import Path
 from functools import partial
 
-from .states import OverallAgentState
-from .nodes.common_nodes import (
+from agent.states import OverallAgentState
+from agent.nodes.common_nodes import (
     intent_classification,
     confirmation_parser_node,
     intent_dispatcher,
@@ -10,16 +10,16 @@ from .nodes.common_nodes import (
     ask_missing_slots_node,
     language_adaptation_node,
 )
-from .routers import (
+from agent.routers import (
     start_router,
     intent_router,
     query_intent_router,
     insert_router,
     tools_classification_router,
 )
-from .nodes.insert_nodes import insert_report_node
-from .nodes.crud_nodes import tool_make_order
-from .subgraphs.subgraphs import (
+from agent.nodes.insert_nodes import insert_report_node
+from agent.nodes.crud_nodes import tool_make_order
+from agent.subgraphs.subgraphs import (
     search_nodes_subgraph,
     insert_nodes_subgraph,
     general_actions_subgraph,
@@ -40,21 +40,34 @@ def gen_png_graph(app_obj, name_photo: str, folder: str = "graph_images") -> Non
         f.write(app_obj.get_graph().draw_mermaid_png())
 
 
-async def build_graph(intents):
+async def build_graph(intents, models):
     workflow = StateGraph(OverallAgentState)
 
-    gen_png_graph(search_nodes_subgraph(), name_photo="search_subgraph.png")
-    gen_png_graph(insert_nodes_subgraph(), name_photo="insert_subgraph.png")
-    gen_png_graph(general_actions_subgraph(), name_photo="general_actions_subgraph.png")
-    search_subgraph = search_nodes_subgraph()
-    insert_subgraph = insert_nodes_subgraph()
-    general_subgraph = general_actions_subgraph()
+    gen_png_graph(
+        search_nodes_subgraph(models=models), name_photo="search_subgraph.png"
+    )
+    gen_png_graph(
+        insert_nodes_subgraph(models=models), name_photo="insert_subgraph.png"
+    )
+    gen_png_graph(
+        general_actions_subgraph(models=models),
+        name_photo="general_actions_subgraph.png",
+    )
+    search_subgraph = search_nodes_subgraph(models=models)
+    insert_subgraph = insert_nodes_subgraph(models=models)
+    general_subgraph = general_actions_subgraph(models=models)
 
-    workflow.add_node("intent", partial(intent_classification, intents=intents))
+    workflow.add_node(
+        "intent", partial(intent_classification, intents=intents, models=models)
+    )
     workflow.add_node("intent_dispatcher", intent_dispatcher)
-    workflow.add_node("ner", partial(ner_slots_classification_node, intents=intents))
+    workflow.add_node(
+        "ner", partial(ner_slots_classification_node, intents=intents, models=models)
+    )
 
-    workflow.add_node("ask_missing_slots", ask_missing_slots_node)
+    workflow.add_node(
+        "ask_missing_slots", partial(ask_missing_slots_node, models=models)
+    )
     workflow.add_node("search_subgraph", search_subgraph)
     workflow.add_node("insert_subgraph", insert_subgraph)
     workflow.add_node("general_subgraph", general_subgraph)
@@ -63,8 +76,10 @@ async def build_graph(intents):
 
     workflow.add_node("confirm_parser", confirmation_parser_node)
 
-    workflow.add_node("language_adaptation_node", language_adaptation_node)
-    workflow.add_node("insert_report_node", insert_report_node)
+    workflow.add_node(
+        "language_adaptation_node", partial(language_adaptation_node, models=models)
+    )
+    workflow.add_node("insert_report_node", partial(insert_report_node, models=models))
 
     workflow.add_conditional_edges(
         START,

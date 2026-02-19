@@ -3,7 +3,7 @@ from typing import Dict, Union, Literal, Optional
 from decimal import Decimal
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from src.utils.pydantic_validators import capitalize_str
+from utils.pydantic_validators import capitalize_str
 
 
 class ProductBase(BaseModel):

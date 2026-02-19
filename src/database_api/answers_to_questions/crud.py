@@ -1,18 +1,16 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.agent.initialize_models import embedding_model
-from src.utils.database_utils import chunking
+from utils.database_utils import chunking
 from .schemas import CreateQuestionSchema
-from src.core.models import Question, AnswerToQuestion
+from core.models import Question, AnswerToQuestion
 
 
 async def create_questions(
-    session: AsyncSession,
-    question_in: CreateQuestionSchema,
+    session: AsyncSession, question_in: CreateQuestionSchema, models
 ):
 
     question_dict = question_in.model_dump()
-    embeddings = embedding_model.encode(question_dict["question"])
+    embeddings = models["embedding_model"].encode(question_dict["question"])
 
     question = Question(
         questions=question_dict["question"],

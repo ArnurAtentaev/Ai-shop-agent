@@ -1,11 +1,10 @@
 import logging
 
-from src.core.models.db import db_helper
+from core.models.db import db_helper
+from core.models import Product, Order, OrderAssociation, Shop
 
 from langchain_core.tools import tool
-from src.utils.database_utils import format_sql_results
-from src.core.models import Product, Order, OrderAssociation, Shop
-from .schemas import GetOrders, OrderItemBase
+from .schemas import OrderItemBase
 
 from sqlalchemy import select, update
 from sqlalchemy.exc import OperationalError
@@ -43,7 +42,7 @@ async def get_orders():
 
         return result
 
-    except OperationalError as oper_error:
+    except OperationalError as oper_error:                                                                                                          
         logging.exception(f"DB error in get_orders: {oper_error}")
 
     finally:

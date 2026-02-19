@@ -1,7 +1,7 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, Request, status, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database_api.products.schemas import (
+from database_api.products.schemas import (
     BrandCreate,
     BrandGet,
     ProductGet,
@@ -9,8 +9,8 @@ from src.database_api.products.schemas import (
     CategoryGet,
     CategoryCreate,
 )
-from src.core.models import db_helper
-from src.database_api.products import crud
+from core.models import db_helper
+from database_api.products import crud
 
 
 router_product = APIRouter(tags=["Products"])
@@ -23,11 +23,12 @@ router_product = APIRouter(tags=["Products"])
 )
 async def create_product(
     product_in: ProductCreate,
+    request: Request,
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),
 ):
+    models = request.app.state.models
     return await crud.create_product(
-        session=session,
-        product_in=product_in,
+        session=session, product_in=product_in, models=models
     )
 
 

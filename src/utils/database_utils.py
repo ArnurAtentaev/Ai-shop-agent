@@ -4,8 +4,7 @@ from decimal import Decimal
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sqlalchemy import select, func
 
-from src.agent.initialize_models import reranker_model
-from src.core.models.shop import Ratings
+from core.models.shop import Ratings
 
 logging.basicConfig(level=logging.INFO)
 
@@ -38,10 +37,10 @@ def chunking(text: str) -> list[str]:
     return splitter.split_text(text)
 
 
-def reranker(query: str, found, top_n: int = 1):
+def reranker(query: str, models, found, top_n: int = 1):
     pairs = [(query, text) for text in found]
 
-    scores = reranker_model.predict(pairs)
+    scores = models["reranker_model"].predict(pairs)
     logging.info(f"RERANKER SCORES: {scores}")
 
     reranked = list(zip(found, scores))

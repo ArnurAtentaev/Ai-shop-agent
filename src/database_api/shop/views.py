@@ -1,14 +1,14 @@
 from fastapi import APIRouter, status, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database_api.shop.schemas import (
+from database_api.shop.schemas import (
     GetRatingShop,
     CreateRatingShop,
     GetShop,
     CreateShop,
 )
-from src.core.models import db_helper
-from src.database_api.shop import crud
+from core.models import db_helper
+from database_api.shop import crud
 
 
 router_shop = APIRouter(tags=["Shop"])

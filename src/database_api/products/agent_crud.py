@@ -1,11 +1,10 @@
 import logging
 from typing import Optional
 
-from src.core.models.db import db_helper
-from src.database_api.orders.schemas import CreateInsertOrder
-from src.agent.initialize_models import embedding_model
-from src.utils.database_utils import rating_subquery, format_sql_results
-from src.core.models import Product, Shop, ProductEmbedding
+from core.models.db import db_helper
+from database_api.orders.schemas import CreateInsertOrder
+from utils.database_utils import rating_subquery, format_sql_results
+from core.models import Product, Shop, ProductEmbedding
 from .schemas import ProductEmbeddingGet
 
 from langchain_core.tools import tool
@@ -62,11 +61,11 @@ async def find_products(product_name: str) -> Optional[Product]:
 
 @tool
 async def find_similar(
-    query: str, k_similarity: int = 10, limit: int = 3
+    query: str, models, k_similarity: int = 10, limit: int = 3
 ) -> Optional[list[ProductEmbeddingGet]]:
     """Sql query to find similar products."""
 
-    query_vector = embedding_model.encode(
+    query_vector = models["embedding_model"].encode(
         query,
         normalize_embeddings=True,
     )

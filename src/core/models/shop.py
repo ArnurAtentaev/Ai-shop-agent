@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
-from src.core.models.base import Base
-from src.core.models.mixins import ShopRelationMixin
+from core.models.base import Base
+from core.models.mixins import ShopRelationMixin
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import CheckConstraint

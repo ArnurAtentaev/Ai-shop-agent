@@ -1,11 +1,8 @@
-import json
 import logging
 
-from src.agent.initialize_models import generative_model
-from src.agent.states import OverallAgentState
-from src.agent.prompts import (
+from agent.states import OverallAgentState
+from agent.prompts import (
     INSERT_ORDER_REPORT_PROMPT,
-    NOT_AVAILABLE_PROMPT,
     INSERT_CONFIRM_NODE,
 )
 
@@ -14,13 +11,13 @@ from langchain_core.prompts import PromptTemplate
 logging.basicConfig(level=logging.INFO)
 
 
-def insert_confirm_node(state: OverallAgentState) -> OverallAgentState:
+def insert_confirm_node(state: OverallAgentState, models) -> OverallAgentState:
     prompt = PromptTemplate(
         input_variables=["question", "intent", "order_products", "city"],
         template=INSERT_CONFIRM_NODE,
     )
 
-    llm_chain = prompt | generative_model
+    llm_chain = prompt | models["generative_model"]
     result = llm_chain.invoke(
         {
             "question": state.query,
@@ -37,12 +34,12 @@ def insert_confirm_node(state: OverallAgentState) -> OverallAgentState:
     return state
 
 
-def insert_report_node(state: OverallAgentState) -> OverallAgentState:
+def insert_report_node(state: OverallAgentState, models) -> OverallAgentState:
     prompt = PromptTemplate(
         input_variables=["data"], template=INSERT_ORDER_REPORT_PROMPT
     )
 
-    llm_chain = prompt | generative_model
+    llm_chain = prompt | models["generative_model"]
 
     result = llm_chain.invoke(
         {

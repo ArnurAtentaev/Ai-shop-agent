@@ -1,6 +1,5 @@
-from src.agent.states import OverallAgentState
-
-from src.agent.states_variables import (
+from agent.states import OverallAgentState
+from agent.states_variables import (
     SLOT_INTENTS,
     GENERAL_ACTION_INTENTS,
     SEARCH_TOOLS,

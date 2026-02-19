@@ -5,7 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import func, Integer
 from sqlalchemy.schema import Sequence
 
-from src.core.models.base import Base
+from core.models.base import Base
 
 if TYPE_CHECKING:
     from .order_associate import OrderAssociation

@@ -1,9 +1,8 @@
 import logging
 
-from src.core.models.db import db_helper
-from src.core.models import AnswerToQuestion, Question
-from src.utils.database_utils import reranker
-from src.agent.initialize_models import embedding_model
+from core.models.db import db_helper
+from core.models import AnswerToQuestion, Question
+from utils.database_utils import reranker
 
 from langchain_core.tools import tool
 from sqlalchemy import FLOAT, select, cast
@@ -13,10 +12,10 @@ logging.basicConfig(level=logging.INFO)
 
 
 @tool
-async def get_general_answer(query: str):
+async def get_general_answer(query: str, models):
     """General questions answered."""
 
-    query_vector = embedding_model.encode(
+    query_vector = models["embedding_model"].encode(
         query,
         normalize_embeddings=True,
     )
@@ -38,7 +37,7 @@ async def get_general_answer(query: str):
         logging.info(f"RESULT: {result_execution}")
 
         if result_execution is not None:
-            reranked = reranker(query=query, found=result_execution)
+            reranked = reranker(query=query, found=result_execution, models=models)
             logging.info(f"RERANKED: {reranked}")
             return reranked
 

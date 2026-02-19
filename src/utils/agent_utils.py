@@ -15,7 +15,9 @@ def extract_slots_from_schema(schema: dict) -> list[str]:
     return list(schema["properties"].keys())
 
 
-def ner_classification(model, selected_prompt: str, question: str, schema: dict = None):
+def ner_classification(
+    model, selected_prompt: str, question: str, schema: dict | None = None
+):
     prompt = PromptTemplate(
         input_variables=["slots_list_str", "schema", "question"],
         template=selected_prompt,

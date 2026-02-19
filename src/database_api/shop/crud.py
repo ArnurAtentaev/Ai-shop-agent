@@ -3,7 +3,7 @@ import logging
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import OperationalError
 
-from src.core.models.shop import Shop, Ratings
+from core.models.shop import Shop, Ratings
 from .schemas import CreateRatingShop, CreateShop
 
 logging.basicConfig(level=logging.INFO)

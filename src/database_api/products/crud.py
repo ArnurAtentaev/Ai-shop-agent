@@ -1,9 +1,8 @@
 import logging
 
-from src.core.models import Product, ProductEmbedding, Category, Brand, Shop
-from src.database_api.products.schemas import BrandCreate, ProductCreate, CategoryCreate
-from src.agent.initialize_models import embedding_model
-from src.utils.database_utils import build_product_text, chunking
+from core.models import Product, ProductEmbedding, Category, Brand, Shop
+from database_api.products.schemas import BrandCreate, ProductCreate, CategoryCreate
+from utils.database_utils import build_product_text, chunking
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.exceptions import HTTPException
@@ -11,10 +10,7 @@ from fastapi.exceptions import HTTPException
 logging.basicConfig(level=logging.INFO)
 
 
-async def create_product(
-    session: AsyncSession,
-    product_in: ProductCreate,
-):
+async def create_product(session: AsyncSession, product_in: ProductCreate, models):
     category = await session.get(Category, product_in.category_id)
     if not category:
         raise HTTPException(404, "Category not found")
@@ -40,10 +36,8 @@ async def create_product(
     )
     logging.info(f"BUILDED TEXT: {product_text}")
 
-    # embed_model = get_embedding_model()
-
     chunks = chunking(product_text)
-    embeddings = embedding_model.encode(chunks)
+    embeddings = models["embedding_model"].encode(chunks)
 
     for chunk, vector in zip(chunks, embeddings):
         session.add(

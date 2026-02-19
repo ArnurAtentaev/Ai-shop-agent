@@ -14,10 +14,5 @@ class GetOrderItem(OrderItemBase):
 class GetOrder(OrderBase):
     model_config = ConfigDict(from_attributes=True)
 
-
-class GetOrders(OrdersBase):
+class CreateOrders(OrdersBase):
     model_config = ConfigDict(from_attributes=True)
-
-
-class CreateOrders(GetOrders):
-    pass
