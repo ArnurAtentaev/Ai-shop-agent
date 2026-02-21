@@ -18,5 +18,6 @@ async def ai_agent_chat(request: Request, query: str):
     response = AgentResponse(
         tool_res=state.get("tool_res", None), answer=state["answer"]
     )
+    logging.info(f"USER QUERY: {query}")
     logging.info(f"RESPONSE: {response.model_dump()}")
     return {"response": response}

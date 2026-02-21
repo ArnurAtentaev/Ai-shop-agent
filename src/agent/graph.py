@@ -31,7 +31,7 @@ from langgraph.checkpoint.memory import InMemorySaver
 checkpointer = InMemorySaver()
 
 
-def gen_png_graph(app_obj, name_photo: str, folder: str = "graph_images") -> None:
+def gen_png_graph(app_obj, name_photo: str, folder: str = ".images/graphs") -> None:
     save_dir = Path(folder)
     save_dir.mkdir(parents=True, exist_ok=True)
     file_path = save_dir / name_photo
