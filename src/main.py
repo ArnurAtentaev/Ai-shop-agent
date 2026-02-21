@@ -5,7 +5,7 @@ import uvicorn
 from fastapi import FastAPI
 from sqlalchemy import text
 
-from agent.initialize_models import ModelGetter, load_models
+from agent.initialize_models import load_models
 
 from agent.graph import build_graph, gen_png_graph
 from core.models import Base, db_helper
@@ -19,11 +19,10 @@ async def lifespan(app: FastAPI):
         await conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
         await conn.run_sync(Base.metadata.create_all)
 
-    with open("agent/intents.json") as f:
+    with open("intents.json") as f:
         app.state.intents = json.load(f)
 
-    models_map = await load_models()
-    models = ModelGetter(models_map)
+    models = await load_models()
 
     app.state.agent_graph = await build_graph(intents=app.state.intents, models=models)
     gen_png_graph(app.state.agent_graph, name_photo="main_graph.png")

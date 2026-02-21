@@ -17,20 +17,9 @@ OLLAMA_PORT_SERVICE = os.getenv("OLLAMA_PORT_SERVICE")
 OLLAMA_URL = f"http://ollama:{OLLAMA_PORT_SERVICE}"
 
 
-class ModelGetter:
-    def __init__(self, models: dict):
-        self.models = models
-
-    def __getitem__(self, key):
-        if key in self.models:
-            return self.models[key]
-        else:
-            raise KeyError(f"Model '{key}' not found.")
-
-
 async def load_models() -> dict:
     loop = asyncio.get_running_loop()
-    
+
     generative_model = ChatOllama(model=llm_model_name, base_url=OLLAMA_URL)
 
     embedding_model = await loop.run_in_executor(
