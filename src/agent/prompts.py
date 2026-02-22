@@ -179,7 +179,7 @@ Write a concise, human-like response that summarizes the data in a way that natu
 
 RULES:
 - Do NOT miss anything that is given to you.
-- If there is an article, you MUST mention it.
+- If there is an article, you MUST MENTION it. Do NOT MISS article.
 
 CONSTRAINTS:
 - Use ONLY the facts provided in the data.
@@ -187,6 +187,7 @@ CONSTRAINTS:
 - Do NOT describe the data structure.
 - Do NOT use templates or rigid phrasing.
 - Do NOT add assumptions or extra information.
+- Do NOT make up anything.
 - The response should sound like something a human assistant would say.
 - If not information in data, say about it.
 
