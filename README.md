@@ -9,15 +9,16 @@ AGENT FUNCTIONALS:
 
 THE GRAPHS LOOK LIKE THIS:
 
-- Main graph:
-![Main graph](./.images/graphs/main_graph.png)
+**Main graph:**
+<br>
+<img src="./.images/graphs/main_graph.png" alt="Main graph" width="700">
 
 - Subgraphs:
-1) Subgraph for search operations:
-    ![Search subgraph](./.images/graphs/search_subgraph.png)
+1) *Subgraph for search operations:*<br>
+    <img src="./.images/graphs/search_subgraph.png" alt="Search subgraph" width="600"><br><br>
 
-2) Subgraph for insert operations:
-    ![Insert subgraph](./.images/graphs/insert_subgraph.png)
+2) *Subgraph for insert operations:*<br>
+    <img src="./.images/graphs/insert_subgraph.png" alt="Insert subgraph" width="600"><br><br>
 
-3) Subgraph for general operations:
-    ![General operations subgraph](./.images/graphs/general_operations_subgraph.png)
+3) *Subgraph for general operations:*<br>
+    <img src="./.images/graphs/general_operations_subgraph.png" alt="General operations subgraph" width="600">
