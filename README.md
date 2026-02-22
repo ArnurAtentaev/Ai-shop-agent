@@ -11,13 +11,15 @@ EXAMPLE:
 
 <h4>INTENTS:</h4>
 <br>
-- Find products.
-- Find similar.
-- Get order/s.
-- Make order/s.
-- Answer general question/s.
-- Did not classified(if model could not classify user query).
+<ul>
+<li>Find products.</li>
+<li>Find similar.</li>
+<li>Get order/s.</li>
+<li>Make order/s.</li>
+<li>Answer general question/s.</li>
+<li>Did not classified(if model could not classify user query).</li>
 File is located in src/intents.json
+</ul>
 <br>
 <br>
 <h4>TOOLS:</h4>
@@ -27,10 +29,9 @@ Get user orders(in future, we can bind on user account).
 Make order/s with use articles of products.
 Answer for general client questions.
 
-<h2>THE GRAPHS LOOK LIKE THIS:<h2>
-
-<h3>**Main graph:**</h3>
+<h2>THE GRAPHS LOOK LIKE THIS:</h2>
 <br>
+<h3>Main graph:</h3>
 <br>
 <img src="./.images/graphs/main_graph.png" alt="Main graph" width="600">
 
