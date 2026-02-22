@@ -22,7 +22,7 @@ def insert_confirm_node(state: OverallAgentState, models) -> OverallAgentState:
         {
             "question": state.query,
             "intent": state.intent_result,
-            "order_products": state.tool_res,
+            "order_details": state.tool_res,
             "city": state.slots["city"],
         }
     )

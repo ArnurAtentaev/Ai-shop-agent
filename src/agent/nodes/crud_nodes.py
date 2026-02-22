@@ -108,6 +108,7 @@ async def tool_get_products_by_article(state: OverallAgentState) -> OverallAgent
         )
 
     logging.info(f"CHECK PRODUCTS BY ARTICLE: {products_list}")
+    state.tool_res = products_list
     return state
 
 

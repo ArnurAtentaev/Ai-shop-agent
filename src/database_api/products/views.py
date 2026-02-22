@@ -26,9 +26,8 @@ async def create_product(
     request: Request,
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),
 ):
-    models = request.app.state.models
     return await crud.create_product(
-        session=session, product_in=product_in, models=models
+        session=session, product_in=product_in, models=request.app.state.models
     )
 
 

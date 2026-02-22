@@ -22,9 +22,11 @@ async def lifespan(app: FastAPI):
     with open("intents.json") as f:
         app.state.intents = json.load(f)
 
-    models = await load_models()
+    app.state.models = await load_models()
 
-    app.state.agent_graph = await build_graph(intents=app.state.intents, models=models)
+    app.state.agent_graph = await build_graph(
+        intents=app.state.intents, models=app.state.models
+    )
     gen_png_graph(app.state.agent_graph, name_photo="main_graph.png")
 
     yield

@@ -231,10 +231,7 @@ Data: {data}
 INSERT_CONFIRM_NODE = """
 You are a response formatter.
 
-You are given structured JSON data.
-DO NOT invent or add anything.
-DO NOT change values.
-ONLY describe what is given.
+You are given data:
 
 question:
 {question}
@@ -242,26 +239,42 @@ question:
 intent:
 {intent}
 
-order_products:
-{order_products}
+order_details:
+{order_details}
 
 delivery to city:
 {city}
 
-FOR EXAMPLE:
-1) 
-  Would you like to place an order?
-  Please confirm:
-  Confirm order:
-  - First product:
-      Product: <product>
-      Article: <article>
-      Price: <price>
-      Units: <count>
-      Shop: <shop>
+INSTRUCTIONS:
+1) Output ONLY the formatted order confirmation. Do NOT add any introductory phrases, explanations, or comments.
+2) Do NOT output lists or dictionaries.
+3) Do NOT invent products.
+4) Do NOT change any values.
+5) Use ONLY the facts provided in the data.
+6) Do NOT describe the data structure.
+7) For each product in order_details, create a numbered record:
+   - "First product", "Second product", etc.
+   - Include all fields from the product exactly as provided.
+8) Use proper line breaks and 4-space indentation for readability.
+9) Include the delivery city and a final prompt to confirm the order.
+10) Do not add any extra words at the start or end; start directly with the confirmation message.
 
-  Delivery city: <city>.
-  Please answer: Yes or No".
+EXAMPLE: 
+  question: "I want to order 2 units of product 100000 to Almaty"
+  intent: "make_order"
+  order_details: [{{"article": 100000, "product": "Ajazz Ak820", "price": 24990, "uantity": 2, "shop": "Llmashi"}}]
+  Formatted output:
+    Would you like to place an order?
+    Please confirm:
+    - First product:
+      Product: Ajazz Ak820
+      Article: 100000
+      Price: 24990
+      Quantity: 2
+      Shop: Llmashi
+
+    Delivery city: Almaty.
+    Please answer: Yes or No".
 """
 
 INSERT_ORDER_REPORT_PROMPT = """
