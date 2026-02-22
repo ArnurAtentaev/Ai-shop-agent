@@ -11,14 +11,14 @@ THE GRAPHS LOOK LIKE THIS:
 
 **Main graph:**
 <br>
-<img src="./.images/graphs/main_graph.png" alt="Main graph" width="700">
+<img src="./.images/graphs/main_graph.png" alt="Main graph" width="600">
 
 - Subgraphs:
-1) *Subgraph for search operations:*<br>
-    <img src="./.images/graphs/search_subgraph.png" alt="Search subgraph" width="600"><br><br>
+1) Subgraph for search operations:<br>
+    <img src="./.images/graphs/search_subgraph.png" alt="Search subgraph" width="400"><br><br>
 
-2) *Subgraph for insert operations:*<br>
-    <img src="./.images/graphs/insert_subgraph.png" alt="Insert subgraph" width="600"><br><br>
+2) Subgraph for insert operations:<br>
+    <img src="./.images/graphs/insert_subgraph.png" alt="Insert subgraph" width="400"><br><br>
 
-3) *Subgraph for general operations:*<br>
-    <img src="./.images/graphs/general_operations_subgraph.png" alt="General operations subgraph" width="600">
+3) Subgraph for general operations:<br>
+    <img src="./.images/graphs/general_operations_subgraph.png" alt="General operations subgraph" width="400">
