@@ -1,6 +1,6 @@
 <h1 align="center">AI AGENT FOR SHOP</h1>
 
-<h2 align="center">AGENT FUNCTIONALS:</h2>
+<h2>AGENT FUNCTIONALS:</h2>
 <h3>INTENT CLASSIFICATION</h3>
 <br>
 <p>The project uses an intents.json file that contains all intents and their descriptions. This allows the model to understand in the prompt what each intent is responsible for. The file also includes slots that need to be filled by the NER models.</p>
@@ -18,16 +18,15 @@ EXAMPLE:
 <li>Make order/s.</li>
 <li>Answer general question/s.</li>
 <li>Did not classified(if model could not classify user query).</li>
-File is located in src/intents.json
 </ul>
-<br>
+<p>File is located in src/intents.json</p>
 <br>
 <h4>TOOLS:</h4>
-Find products in whole marketplace.
-Find similar products on user query.
-Get user orders(in future, we can bind on user account).
-Make order/s with use articles of products.
-Answer for general client questions.
+<li>Find products in whole marketplace.</li>
+<li>Find similar products on user query.</li>
+<li>Get user orders(in future, we can bind on user account).</li>
+<li>Make order/s with use articles of products.</li>
+<li>Answer for general client questions.</li>
 
 <h2>THE GRAPHS LOOK LIKE THIS:</h2>
 <br>
@@ -36,7 +35,8 @@ Answer for general client questions.
 <img src="./.images/graphs/main_graph.png" alt="Main graph" width="600">
 
 <h3>Subgraphs:</h3>
-1. Subgraph for search operations:
+
+1) Subgraph for search operations:
 <br>
     <img src="./.images/graphs/search_subgraph.png" alt="Search subgraph" width="400"><br><br>
 

@@ -83,16 +83,14 @@ def confirmation_parser_node(state: OverallAgentState) -> OverallAgentState:
     if text in (
         "да",
         "yes",
-        "иә",
         "подтверждаю",
         "ok",
         "confirm",
-        "жақсы",
     ):
         state.confirmation_status = "yes"
         return state
 
-    elif text in ("нет", "no", "жоқ", "отмена", "cancel", "бас тарту"):
+    elif text in ("нет", "no", "отмена", "cancel"):
         state.confirmation_status = "stop"
         state.waiting_confirmation = False
         state.answer = "Order has been cancelled."
