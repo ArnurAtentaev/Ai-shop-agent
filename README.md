@@ -4,13 +4,27 @@
 <h2>TECH STACK</h2>
 <ul>
   <li>Python 3.13.2</li>
+  <li>PostgreSQL + pgvector(vector storage for embeddings)</li>
   <li>FastAPI (API endpoints)</li>
   <li>Pydantic (data validation)</li>
+  <li>Docker(Dockerfile and docker-compose)</li>
   <li>LangChain(agent logic)</li>
   <li>LangGraph(agent workflow)</li>
   <li>LLMs (intent classification, NER and outputs)</li>
   <li>Embedding model (text embeddings)</li>
+  <li>Reranker model (rerank rag results)</li>
   <li>Sequence to sequence model (translate the request into the language)</li>
+</ul>
+
+<h2>DEPLOYMENT</h2>
+<p>
+The whole project runs via <b>Docker Compose</b>.
+Services:
+</p>
+<ul>
+  <li>app service: FastAPI for API endpoints.</li>
+  <li>PostgreSQL database with <b>pgvector</b>.</li>
+  <li>Ollama server hosting the LLM model(llama3.2:3b).</li>
 </ul>
 
 <h2>HOW IT WORKS</h2>
@@ -26,7 +40,6 @@ EXAMPLE:
 <img src="./.images/agent_workflow/intent_example.PNG" width="500">
 
 <h4>INTENTS:</h4>
-<br>
 <ul>
 <li>Find products.</li>
 <li>Find similar.</li>
@@ -53,12 +66,53 @@ EXAMPLE:
 <h3>Subgraphs:</h3>
 
 1) Subgraph for search operations:
+<br>
     <img src="./.images/graphs/search_subgraph.png" width="400"><br><br>
 
 2) Subgraph for insert operations:
+<br>
     <img src="./.images/graphs/insert_subgraph.png" width="300"><br><br>
 
 3) Subgraph for general operations:
+<br>
     <img src="./.images/graphs/general_operations_subgraph.png" width="500">
 
-<h2>EXAMPLE USAGE</h2>
+<h2>EXAMPLES</h2>
+
+1) Intent: make_order.
+<ul>
+<li>
+ask confirm:
+<img src="./.images/agent_workflow/confirm_parser.PNG" width="500">
+</li>
+<li>
+if confirm is yes:
+<img src="./.images/agent_workflow/make_order.PNG" width="500">
+</li>
+<li>
+if confirm is no:
+<img src="./.images/agent_workflow/confirm_parser_no.PNG" width="500">
+</li>
+</ul>
+
+2) Intent: did_not_classified.
+<img src="./.images/agent_workflow/did_not_classif.PNG" width="500">
+
+3) Slots extraction:
+<img src="./.images/agent_workflow/slots_values.PNG" width="500">
+
+4) Missing slots:
+<img src="./.images/agent_workflow/missing_slots.PNG" width="500">
+
+and agent response:
+<img src="./.images/agent_workflow/missing_slots_answer.PNG" width="500">
+
+5) Intent: find product:
+
+
+<h2>FUTURE IMPROVEMENTS</h2>
+<ul>
+  <li>Bind agent to real user accounts</li>
+  <li>Integrate payment system for orders</li>
+  <li>Enhance NER model for more accurate slot filling</li>
+</ul>
