@@ -79,35 +79,27 @@ EXAMPLE:
 
 <h2>EXAMPLES</h2>
 
-1) Intent: make_order.
-    <ul>
-    <li>
-    ask confirm:
-    <br>
-    <img src="./.images/agent_workflow/confirm_parser.PNG" width="500">
-    </li>
-    <li>
-    if confirm is yes:
-    <br>
-    <img src="./.images/agent_workflow/make_order.PNG" width="500">
-    </li>
-    <li>
-    if confirm is no:
-    <br>
-    <img src="./.images/agent_workflow/confirm_parser_no.PNG" width="500">
-    </li>
-    </ul>
+<h3>Intent: make_order</h3>
 
-2) Intent: did_not_classified.
+<p><b>Step 1: Ask for confirmation</b></p>
+<img src="./.images/agent_workflow/confirm_parser.PNG" width="500">
+
+<p><b>Step 2: If confirmation is YES</b></p>
+<img src="./.images/agent_workflow/make_order.PNG" width="500">
+
+<p><b>Step 2: If confirmation is NO</b></p>
+<img src="./.images/agent_workflow/confirm_parser_no.PNG" width="500">
+
+<h3>Intent: did_not_classified</h3>
 <img src="./.images/agent_workflow/did_not_classif.PNG" width="500">
 
-3) Slots extraction:
+<h3>Slots extraction:</h3>
 <img src="./.images/agent_workflow/slots_values.PNG" width="500">
 
-4) Missing slots:
+<h3>Missing slots:</h3>
 <img src="./.images/agent_workflow/missing_slots.PNG" width="500">
 
-and agent response:
+<p><b>Agent response:</p></b>
 <img src="./.images/agent_workflow/missing_slots_answer.PNG" width="500">
 
 5) Intent: find product:
