@@ -81,14 +81,14 @@ EXAMPLE:
 
 <h3>Intent: make_order</h3>
 
-<p><b>Step 1: Ask for confirmation</b></p>
-<img src="./.images/agent_workflow/confirm_parser.PNG" width="500">
+><p><b>Step 1: Ask for confirmation</b></p>
+><img src="./.images/agent_workflow/confirm_parser.PNG" width="500">
 
-<p><b>Step 2: If confirmation is YES</b></p>
-<img src="./.images/agent_workflow/make_order.PNG" width="500">
+><p><b>Step 2: If confirmation is YES</b></p>
+><img src="./.images/agent_workflow/make_order.PNG" width="500">
 
-<p><b>Step 2: If confirmation is NO</b></p>
-<img src="./.images/agent_workflow/confirm_parser_no.PNG" width="500">
+><p><b>Step 2: If confirmation is NO</b></p>
+><img src="./.images/agent_workflow/confirm_parser_no.PNG" width="500">
 
 <h3>Intent: did_not_classified</h3>
 <img src="./.images/agent_workflow/did_not_classif.PNG" width="500">
