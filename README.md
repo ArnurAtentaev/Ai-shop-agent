@@ -121,6 +121,8 @@ EXAMPLE:
 ><p><b>If not answer in database:</p></b>
 ><img src="./.images/agent_workflow/not_answer_general_question.PNG" width="500">
 
+<h3>ETC.</h3>
+
 <h2>FUTURE IMPROVEMENTS</h2>
 <ul>
   <li>Bind agent to real user accounts</li>
