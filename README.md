@@ -60,21 +60,21 @@ EXAMPLE:
 
 <h2>THE GRAPHS LOOK LIKE THIS:</h2>
 <h3>Main graph:</h3>
-<br>
+
 <img src="./.images/graphs/main_graph.png" alt="Main graph" width="600">
 
 <h3>Subgraphs:</h3>
 
 1) Subgraph for search operations:
-<br>
+
     <img src="./.images/graphs/search_subgraph.png" width="400"><br><br>
 
 2) Subgraph for insert operations:
-<br>
+
     <img src="./.images/graphs/insert_subgraph.png" width="300"><br><br>
 
 3) Subgraph for general operations:
-<br>
+
     <img src="./.images/graphs/general_operations_subgraph.png" width="500">
 
 <h2>EXAMPLES</h2>
@@ -124,6 +124,5 @@ EXAMPLE:
 <h2>FUTURE IMPROVEMENTS</h2>
 <ul>
   <li>Bind agent to real user accounts</li>
-  <li>Integrate payment system for orders</li>
-  <li>Enhance NER model for more accurate slot filling</li>
+  <li>Use a specialized (trained) NER model to fill slots more accurately</li>
 </ul>
