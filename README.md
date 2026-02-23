@@ -90,20 +90,36 @@ EXAMPLE:
 ><p><b>Step 2: If confirmation is NO</b></p>
 ><img src="./.images/agent_workflow/confirm_parser_no.PNG" width="500">
 
+<h3>Intent: find_product</h3>
+
+><p></b>Step 1: NER extranction:</b></p>
+><img src="./.images/agent_workflow/find_product_slots.PNG" width="500">
+
+><p></b>Step 2: Response:</b></p>
+><img src="./.images/agent_workflow/find_product_response.PNG" width="500">
+
 <h3>Intent: did_not_classified</h3>
-<img src="./.images/agent_workflow/did_not_classif.PNG" width="500">
+
+><img src="./.images/agent_workflow/did_not_classif.PNG" width="500">
 
 <h3>Slots extraction:</h3>
-<img src="./.images/agent_workflow/slots_values.PNG" width="500">
+
+><img src="./.images/agent_workflow/slots_values.PNG" width="500">
 
 <h3>Missing slots:</h3>
-<img src="./.images/agent_workflow/missing_slots.PNG" width="500">
 
-<p><b>Agent response:</p></b>
-<img src="./.images/agent_workflow/missing_slots_answer.PNG" width="500">
+><img src="./.images/agent_workflow/missing_slots.PNG" width="500">
 
-5) Intent: find product:
+><p><b>Agent response:</p></b>
+><img src="./.images/agent_workflow/missing_slots_answer.PNG" width="500">
 
+<h3>Intent: general_question</h3>
+
+><p><b>Agent response:</p></b>
+><img src="./.images/agent_workflow/answer_general_questions.PNG" width="500">
+
+><p><b>If not answer in database:</p></b>
+><img src="./.images/agent_workflow/not_answer_general_question.PNG" width="500">
 
 <h2>FUTURE IMPROVEMENTS</h2>
 <ul>
