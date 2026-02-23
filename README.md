@@ -23,8 +23,8 @@ Services:
 </p>
 <ul>
   <li>app service: FastAPI for API endpoints.</li>
-  <li>PostgreSQL database with <b>pgvector</b>.</li>
-  <li>Ollama server hosting the LLM model(llama3.2:3b).</li>
+  <li>pgvector-db service: PostgreSQL database with <b>pgvector</b>.</li>
+  <li>ollama service: Ollama server hosting the LLM model(llama3.2:3b).</li>
 </ul>
 
 <h2>HOW IT WORKS</h2>
