@@ -80,20 +80,23 @@ EXAMPLE:
 <h2>EXAMPLES</h2>
 
 1) Intent: make_order.
-<ul>
-<li>
-ask confirm:
-<img src="./.images/agent_workflow/confirm_parser.PNG" width="500">
-</li>
-<li>
-if confirm is yes:
-<img src="./.images/agent_workflow/make_order.PNG" width="500">
-</li>
-<li>
-if confirm is no:
-<img src="./.images/agent_workflow/confirm_parser_no.PNG" width="500">
-</li>
-</ul>
+    <ul>
+    <li>
+    ask confirm:
+    <br>
+    <img src="./.images/agent_workflow/confirm_parser.PNG" width="500">
+    </li>
+    <li>
+    if confirm is yes:
+    <br>
+    <img src="./.images/agent_workflow/make_order.PNG" width="500">
+    </li>
+    <li>
+    if confirm is no:
+    <br>
+    <img src="./.images/agent_workflow/confirm_parser_no.PNG" width="500">
+    </li>
+    </ul>
 
 2) Intent: did_not_classified.
 <img src="./.images/agent_workflow/did_not_classif.PNG" width="500">
