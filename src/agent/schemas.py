@@ -2,6 +2,14 @@ from pydantic import BaseModel
 from typing import Optional, List, Any
 
 
+class IntentParser(BaseModel):
+    intent: str
+
+
+class NerParser(BaseModel):
+    pass
+
+
 class AgentResponse(BaseModel):
     tool_res: Optional[List[Any]] = None
     answer: str

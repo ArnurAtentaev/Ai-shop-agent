@@ -1,6 +1,9 @@
 INTENT_PROMPT = """
 You are an intent classification assistant for an online shop.
 
+RETURN THE FORMAT AS IN INSTRUCTIONS:
+{format_instruction}
+
 The possible intents and their descriptions are:
 
 {intents}

@@ -9,7 +9,6 @@ logging.basicConfig(level=logging.INFO)
 
 
 def extract_slots_from_schema(schema: dict) -> list[str]:
-    """Рекурсивно извлекает ключи верхнего уровня из JSON-схемы."""
     if not schema or "properties" not in schema:
         return []
     return list(schema["properties"].keys())

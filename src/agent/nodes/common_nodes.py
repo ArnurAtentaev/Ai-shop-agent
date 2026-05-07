@@ -17,9 +17,10 @@ from utils.agent_utils import (
     detect_language,
 )
 from core.config import support_settings
+from agent.schemas import IntentParser
 
 from langchain_core.prompts import PromptTemplate
-
+from langchain_core.output_parsers import PydanticOutputParser
 
 logging.basicConfig(level=logging.INFO)
 
@@ -44,9 +45,12 @@ def intent_classification(
     state.tool_res = None
     state.answer = None
 
+    parser = PydanticOutputParser(pydantic_object=IntentParser)
+
     prompt = PromptTemplate(
         input_variables=["intents", "question"],
         template=INTENT_PROMPT,
+        partial_variables={"format_instruction": parser.get_format_instructions()},
     )
 
     intents_names = intents.keys()
@@ -58,7 +62,7 @@ def intent_classification(
         )
 
     intent_chain = prompt | models["generative_model"]
-    intent_result = intent_chain.invoke(
+    response = intent_chain.invoke(
         {
             "intents": intent_and_description,
             "question": state.query,
@@ -66,7 +70,7 @@ def intent_classification(
         temperature=0.0,
     )
 
-    intent = intent_result.content.strip()
+    intent = parser.parse(response.content).intent
     logging.info(f"DEFINED INTENT: {intent}")
 
     if intent not in intents_names or intent == "did_not_classified":
